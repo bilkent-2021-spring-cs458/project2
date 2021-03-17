@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, TouchableWithoutFeedback, StyleSheet } from 'react-native';
-import { Divider, Datepicker, Icon, Layout, Text, TopNavigation, TopNavigationAction,SelectGroup, Input ,Autocomplete, AutocompleteItem, IndexPath, Select, SelectItem } from '@ui-kitten/components';
+import { Divider, Datepicker, Icon, Layout, Text, Button, TopNavigation, TopNavigationAction,SelectGroup, Input ,Autocomplete, AutocompleteItem, IndexPath, Select, SelectItem } from '@ui-kitten/components';
 
 const cities = [
   { title: 'Ankara' },
@@ -29,21 +29,17 @@ const vaccines = [
 
 ];
 
-const sideEffects = {
-  'Vaccine Area': [
+const sideEffects = [
     'Pain',
     'Redness',
     'Swelling',
-  ],
-  'Body': [
     'Tiredness',
     'Headache',
     'Muscle pain',
     'Chills',
     'Nausea',
     'Fever'
-  ],
-};
+];
 
 const filter = (item, query) => item.title.toLowerCase().includes(query.toLowerCase());
 
@@ -85,11 +81,35 @@ export const FormScreen = ({ navigation }) => {
     <SelectItem title={title}/>
   );
 
-  const renderGroup = (title) => (
-    <SelectGroup title={title}>
-      {sideEffects[title].map(renderOption)}
-    </SelectGroup>
-  );
+
+  const handleUserValidation = (text) => {
+    if(text === ''){
+      setEmptyName(false);
+    }
+    const condition = new RegExp('^[a-zA-Z]+$', 'g');
+    setEmptyName(condition.test(text))
+  }
+  const handleSurnameValidation = (text) => {
+    if(text === ''){
+      setEmptySurname(false);
+    }
+    const condition = new RegExp('^[a-zA-Z]+$', 'g');
+    setEmptySurname(condition.test(text))
+  }
+  const handleCityValidation = (text) => {
+    if(text === ''){
+      setEmptyCity(false);
+    }
+    const condition = new RegExp('^[a-zA-Z]+$', 'g');
+    setEmptyCity(condition.test(text))
+  }
+  const handleSubmit = () =>{
+    if(name === '' | surname ==''| city == '' ){
+      alert('Fill the fields')
+      return
+    }
+    navigation.navigate('Home');
+  }
 
   const [name, setName] = React.useState('');
   const [surname, setSurname] = React.useState('');
@@ -98,17 +118,16 @@ export const FormScreen = ({ navigation }) => {
   const [data, setData] = React.useState(cities);
   const [selectedGender, setGenderIndex] = React.useState( new IndexPath(0));
   const [selectedVaccine, setVacccineIndex] = React.useState(new IndexPath(0));
-  // const [selectedEffect, setEffectIndex] = React.useState([new IndexPath(0, 0),  new IndexPath(1, 1),]);
+  const [selectedEffect, setEffectIndex] = React.useState(new IndexPath(0));
+  const [nameEmpty, setEmptyName] = React.useState(true);
+  const [surnameEmpty, setEmptySurname] = React.useState(true);
+  const [cityEmpty, setEmptyCity] = React.useState(true);
   
   const max = new Date();
   const min =  new Date(max.getFullYear() -100, max.getMonth(), max.getDate());
   const displayGender = genders[selectedGender.row];
   const displayVaccine = vaccines[selectedVaccine.row];
-  // const displaySideEffect = selectedEffect.map(index => {
-  //   const title = Object.keys(sideEffects)[index.section];
-  //   console.log(title)
-  //   return sideEffects[title][index.row];
-  // });
+  const displaySideEffect = sideEffects[selectedVaccine.row];
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -120,32 +139,31 @@ export const FormScreen = ({ navigation }) => {
           value={name}
           label='Name'
           placeholder='Your name'
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
+          caption = {nameEmpty ? null: 'Invalid or empty entry' }
           onChangeText={nextValue => setName(nextValue)}
+          onEndEditing={(e)=>handleUserValidation(e.nativeEvent.text)}
         />
         <Input
           value={surname}
           label='Surname'
           placeholder='Your surname'
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
+          caption = {surnameEmpty ? null: 'Invalid or empty entry'}
           onChangeText={nextValue => setSurname(nextValue)}
+          onEndEditing={(e)=>handleSurnameValidation(e.nativeEvent.text)}
         />
         <Autocomplete
           label='City'
           placeholder='Your city'
           value={city}
           onSelect={onSelect}
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
-          onChangeText={onChangeText}>
+          caption = {cityEmpty ? null: 'Cannot be left empty.' }
+          onChangeText={onChangeText}
+          onEndEditing={(e)=>handleCityValidation(e.nativeEvent.text)}>
           {data.map(renderOption)}
+          
         </Autocomplete>
         <Select
           label='Gender'
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
           style={styles.selector}
           placeholder='Default'
           value={displayGender}
@@ -155,8 +173,6 @@ export const FormScreen = ({ navigation }) => {
         </Select>
         <Select
           label='Vaccine Type'
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
           style={styles.selector}
           placeholder='Default'
           value={displayVaccine}
@@ -164,31 +180,31 @@ export const FormScreen = ({ navigation }) => {
           onSelect={index => setVacccineIndex(index)}>
           {vaccines.map(renderSelect)}
         </Select>
-        {/* <Select
-          label='Side Effects'
-          caption='Cannot be left empty.'
-          multiSelect={true}
-          captionIcon={AlertIcon}
+        <Select
+          label='Side Effect'
           style={styles.selector}
           placeholder='Default'
-          value={displaySideEffect.join(',')}
+          value={displaySideEffect}
           selectedIndex={selectedEffect}
           onSelect={index => setEffectIndex(index)}>
-        {Object.keys(sideEffects).map(renderGroup)}
-        </Select> */}
+          {sideEffects.map(renderSelect)}
+        </Select>
         <Datepicker
           style={styles.picker}
           label='Birth Date'
-          caption='Cannot be left empty.'
-          captionIcon={AlertIcon}
           placeholder='Your Birthday'
           date={birthday}
           min={min}
           max={max}
           onSelect={nextDate => setDate(nextDate)}
         />
-
-        
+        <Button 
+          disabled={!nameEmpty || !surnameEmpty || !cityEmpty}
+          status='warning'
+          onPress={handleSubmit}
+        >
+          SUBMIT
+        </Button>
       </Layout>
     </SafeAreaView>
   );
