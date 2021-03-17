@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { SafeAreaView,  StyleSheet } from 'react-native';
 import { Divider, Datepicker, Icon, Layout, Text, Button, TopNavigation, TopNavigationAction,SelectGroup, Input ,Autocomplete, AutocompleteItem, IndexPath, Select, SelectItem } from '@ui-kitten/components';
 
 const cities = [
@@ -58,7 +58,7 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
+    <TopNavigationAction key='navBtnForm' icon={BackIcon} onPress={navigateBack}/>
   );
 
   const onSelect = (index) => {
@@ -131,11 +131,11 @@ export const FormScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title='MyApp' alignment='center' accessoryLeft={BackAction}/>
+      <TopNavigation title='COVID-19 SURVEY' alignment='center' accessoryLeft={BackAction}/>
       <Divider/>
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>COVID-19 SURVEY</Text>
         <Input
+          key='nameInput'
           value={name}
           label='Name'
           placeholder='Your name'
@@ -144,6 +144,7 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleUserValidation(e.nativeEvent.text)}
         />
         <Input
+          key='nameInput'
           value={surname}
           label='Surname'
           placeholder='Your surname'
@@ -152,6 +153,7 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleSurnameValidation(e.nativeEvent.text)}
         />
         <Autocomplete
+          key='nameInput'
           label='City'
           placeholder='Your city'
           value={city}
@@ -163,6 +165,7 @@ export const FormScreen = ({ navigation }) => {
           
         </Autocomplete>
         <Select
+          key='genderSelection'
           label='Gender'
           style={styles.selector}
           placeholder='Default'
@@ -172,6 +175,7 @@ export const FormScreen = ({ navigation }) => {
           {genders.map(renderSelect)}
         </Select>
         <Select
+          key='vaccineSelection'
           label='Vaccine Type'
           style={styles.selector}
           placeholder='Default'
@@ -181,6 +185,7 @@ export const FormScreen = ({ navigation }) => {
           {vaccines.map(renderSelect)}
         </Select>
         <Select
+          key='sideEffectSelection'
           label='Side Effect'
           style={styles.selector}
           placeholder='Default'
@@ -190,6 +195,7 @@ export const FormScreen = ({ navigation }) => {
           {sideEffects.map(renderSelect)}
         </Select>
         <Datepicker
+          key='birthDateInput'
           style={styles.picker}
           label='Birth Date'
           placeholder='Your Birthday'
@@ -199,6 +205,7 @@ export const FormScreen = ({ navigation }) => {
           onSelect={nextDate => setDate(nextDate)}
         />
         <Button 
+          key='submissionBtn'
           disabled={!nameEmpty || !surnameEmpty || !cityEmpty}
           status='warning'
           onPress={handleSubmit}
