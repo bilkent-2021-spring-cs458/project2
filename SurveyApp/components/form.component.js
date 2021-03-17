@@ -44,11 +44,8 @@ const sideEffects = [
 const filter = (item, query) => item.title.toLowerCase().includes(query.toLowerCase());
 
 const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back' />
-);
-
-const AlertIcon = (props) => (
-  <Icon {...props} name='alert-circle-outline'/>
+  <Icon accessible={true}
+  accessibilityLabel='navIcon' {...props} name='arrow-back' />
 );
 
 export const FormScreen = ({ navigation }) => {
@@ -58,7 +55,8 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const BackAction = () => (
-    <TopNavigationAction key='navBtnForm' icon={BackIcon} onPress={navigateBack}/>
+    <TopNavigationAction accessible={true}
+    accessibilityLabel='navBtnForm' icon={BackIcon} onPress={navigateBack}/>
   );
 
   const onSelect = (index) => {
@@ -135,7 +133,8 @@ export const FormScreen = ({ navigation }) => {
       <Divider/>
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Input
-          key='nameInput'
+          accessible={true}
+          accessibilityLabel='nameInput'
           value={name}
           label='Name'
           placeholder='Your name'
@@ -144,7 +143,8 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleUserValidation(e.nativeEvent.text)}
         />
         <Input
-          key='nameInput'
+          accessible={true}
+          accessibilityLabel='surnameInput'
           value={surname}
           label='Surname'
           placeholder='Your surname'
@@ -153,7 +153,8 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleSurnameValidation(e.nativeEvent.text)}
         />
         <Autocomplete
-          key='nameInput'
+          accessible={true}
+          accessibilityLabel='cityInput'
           label='City'
           placeholder='Your city'
           value={city}
@@ -165,7 +166,8 @@ export const FormScreen = ({ navigation }) => {
           
         </Autocomplete>
         <Select
-          key='genderSelection'
+          accessible={true}
+          accessibilityLabel='genderSelection'
           label='Gender'
           style={styles.selector}
           placeholder='Default'
@@ -175,7 +177,8 @@ export const FormScreen = ({ navigation }) => {
           {genders.map(renderSelect)}
         </Select>
         <Select
-          key='vaccineSelection'
+          accessible={true}
+          accessibilityLabel='vaccineSelection'
           label='Vaccine Type'
           style={styles.selector}
           placeholder='Default'
@@ -185,7 +188,8 @@ export const FormScreen = ({ navigation }) => {
           {vaccines.map(renderSelect)}
         </Select>
         <Select
-          key='sideEffectSelection'
+          accessible={true}
+          accessibilityLabel='sideEffectSelection'
           label='Side Effect'
           style={styles.selector}
           placeholder='Default'
@@ -195,7 +199,8 @@ export const FormScreen = ({ navigation }) => {
           {sideEffects.map(renderSelect)}
         </Select>
         <Datepicker
-          key='birthDateInput'
+          accessible={true}
+          accessibilityLabel='birthDateInput'
           style={styles.picker}
           label='Birth Date'
           placeholder='Your Birthday'
@@ -205,7 +210,8 @@ export const FormScreen = ({ navigation }) => {
           onSelect={nextDate => setDate(nextDate)}
         />
         <Button 
-          key='submissionBtn'
+          accessible={true}
+          accessibilityLabel='submissionBtn'
           disabled={!nameEmpty || !surnameEmpty || !cityEmpty}
           status='warning'
           onPress={handleSubmit}
