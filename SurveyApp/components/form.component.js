@@ -120,7 +120,7 @@ export const FormScreen = ({ navigation }) => {
   const [data, setData] = React.useState(cities);
   const [selectedGender, setGenderIndex] = React.useState();
   const [selectedVaccine, setVacccineIndex] = React.useState();
-  const [selectedEffect, setEffectIndex] = React.useState();
+  const [selectedEffects, setEffectIndexes] = React.useState();
   const [nameEmpty, setEmptyName] = React.useState(true);
   const [surnameEmpty, setEmptySurname] = React.useState(true);
   const [cityEmpty, setEmptyCity] = React.useState(true);
@@ -132,9 +132,13 @@ export const FormScreen = ({ navigation }) => {
   const min = new Date(max.getFullYear() - 100, max.getMonth(), max.getDate());
   const displayGender = selectedGender ? genders[selectedGender.row] : "";
   const displayVaccine = selectedVaccine ? vaccines[selectedVaccine.row] : "";
-  const displaySideEffect = selectedEffect
-    ? sideEffects[selectedEffect.row]
-    : "";
+  const displaySideEffect = selectedEffects
+    ? selectedEffects
+        .map((index) => {
+          return sideEffects[index - 1];
+        })
+        .join(", ")
+    : "None";
 
   return (
     <ScrollView
@@ -142,7 +146,7 @@ export const FormScreen = ({ navigation }) => {
         width: "100%",
         height: "100%",
         backgroundColor: "#e0e5ec",
-        marginTop: 30,
+        paddingTop: 30,
       }}
       contentContainerStyle={{
         alignItems: "center",
@@ -237,11 +241,12 @@ export const FormScreen = ({ navigation }) => {
         accessibilityLabel="sideEffectSelection"
       >
         <Select
-          label="Side Effect"
+          label="Side Effects"
           placeholder="Please select"
+          multiSelect
           value={displaySideEffect}
-          selectedIndex={selectedEffect}
-          onSelect={(index) => setEffectIndex(index)}
+          selectedIndex={selectedEffects}
+          onSelect={(index) => setEffectIndexes(index)}
         >
           {sideEffects.map(renderSelect)}
         </Select>
