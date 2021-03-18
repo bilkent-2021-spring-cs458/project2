@@ -71,6 +71,12 @@ export const FormScreen = ({ navigation }) => {
     const condition = new RegExp("^[a-zA-Z]+$", "g");
     return condition.test(name);
   };
+  const isSpotEmpty = (param) => {
+    if (param === "" || param === undefined) {
+      return false;
+    }
+    return true;
+  };
   const handleNameValidation = () => {
     setEmptyName(isNameValid());
   };
@@ -99,7 +105,7 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const validateAll = () => {
-    if (!isNameValid() || !isSurnameValid() || !isCityValid()) {
+    if (!isNameValid() || !isSurnameValid() || !isCityValid() || !isSpotEmpty(displayGender) ||!isSpotEmpty(birthday)||!isSpotEmpty(displaySideEffect) || !isSpotEmpty(displayVaccine) ) {
       return false;
     }
 
