@@ -1,7 +1,8 @@
 import React from 'react';
-import { SafeAreaView,  StyleSheet } from 'react-native';
+import { SafeAreaView,  StyleSheet, } from 'react-native';
 import { Divider, Datepicker, Icon, Layout, Text, Button, TopNavigation, TopNavigationAction,SelectGroup, Input ,Autocomplete, AutocompleteItem, IndexPath, Select, SelectItem } from '@ui-kitten/components';
-
+import { ScrollView } from 'react-native-gesture-handler';
+import { NeuView, NeuButton } from "neumorphism-ui";
 const cities = [
   { title: 'Ankara' },
   { title: 'Istanbul' },
@@ -44,8 +45,11 @@ const sideEffects = [
 const filter = (item, query) => item.title.toLowerCase().includes(query.toLowerCase());
 
 const BackIcon = (props) => (
-  <Icon accessible={true}
-  accessibilityLabel='navIcon' {...props} name='arrow-back' />
+  <Icon {...props} name='arrow-back' />
+);
+
+const AlertIcon = (props) => (
+  <Icon {...props} name='alert-circle-outline'/>
 );
 
 export const FormScreen = ({ navigation }) => {
@@ -69,14 +73,16 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const renderOption = (item, index) => (
-    <AutocompleteItem
+    <AutocompleteItem accessible={true}
+    accessibilityLabel={item.title}
       key={index}
       title={item.title}
     />
   );
 
-  const renderSelect = (title) => (
-    <SelectItem title={title}/>
+  const renderSelect = (title, index) => (
+    <SelectItem accessible={true}
+    accessibilityLabel={title} key={index} title={title}/>
   );
 
 
@@ -128,11 +134,12 @@ export const FormScreen = ({ navigation }) => {
   const displaySideEffect = sideEffects[selectedVaccine.row];
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title='COVID-19 SURVEY' alignment='center' accessoryLeft={BackAction}/>
-      <Divider/>
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <ScrollView style={{ width:'100%',height:'100%',backgroundColor:'#e0e5ec' }}>
+      <NeuView containerStyle={{ marginTop: 30 }} style={{ height: 700, width: '100%', borderRadius: 50 }} contentStyle={{ alignItems: 'center' }}>
+        <TopNavigation title='Survey Screen' alignment='center' accessoryLeft={BackAction} style={{backgroundColor:'transparent', width:'100%'}}></TopNavigation>
+        <Divider/>
         <Input
+          style={styles.selector}
           accessible={true}
           accessibilityLabel='nameInput'
           value={name}
@@ -143,6 +150,7 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleUserValidation(e.nativeEvent.text)}
         />
         <Input
+          style={styles.selector}
           accessible={true}
           accessibilityLabel='surnameInput'
           value={surname}
@@ -153,6 +161,7 @@ export const FormScreen = ({ navigation }) => {
           onEndEditing={(e)=>handleSurnameValidation(e.nativeEvent.text)}
         />
         <Autocomplete
+          style={styles.selector}
           accessible={true}
           accessibilityLabel='cityInput'
           label='City'
@@ -201,7 +210,7 @@ export const FormScreen = ({ navigation }) => {
         <Datepicker
           accessible={true}
           accessibilityLabel='birthDateInput'
-          style={styles.picker}
+          style={styles.selector}
           label='Birth Date'
           placeholder='Your Birthday'
           date={birthday}
@@ -211,21 +220,29 @@ export const FormScreen = ({ navigation }) => {
         />
         <Button 
           accessible={true}
+          ppearance='outline' status='basic'
+          style={styles.btn}
           accessibilityLabel='submissionBtn'
           disabled={!nameEmpty || !surnameEmpty || !cityEmpty}
-          status='warning'
           onPress={handleSubmit}
         >
           SUBMIT
         </Button>
-      </Layout>
-    </SafeAreaView>
+      </NeuView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   selector:{
-    width: 200
+    width: '80%',
+    margin: 8
+  },
+  btn:{
+    width: '80%',
+    margin: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.31)',
+    borderRadius: 20
   }
     
   
