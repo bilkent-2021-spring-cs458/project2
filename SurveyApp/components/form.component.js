@@ -99,6 +99,7 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const validateAll = () => {
+    console.log(!isNameValid(), !isSurnameValid(), !isCityValid())
     if (!isNameValid() || !isSurnameValid() || !isCityValid()) {
       return false;
     }
@@ -107,12 +108,22 @@ export const FormScreen = ({ navigation }) => {
   };
   const handleSubmit = () => {
     if (validateAll()) {
-      navigation.navigate("Home");
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const data = {
+        name: name,
+        surname: surname,
+        birthdate: birthday.toLocaleDateString(undefined, options),
+        gender: displayGender,
+        city: city,
+        sideEffects: displaySideEffect,
+        displayVaccine: displayVaccine
+      }
+      navigation.navigate("Submission",data);
     } else {
       alert("Fill the fields");
     }
   };
-
+  //data
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [birthday, setDate] = React.useState();
@@ -121,6 +132,7 @@ export const FormScreen = ({ navigation }) => {
   const [selectedGender, setGenderIndex] = React.useState();
   const [selectedVaccine, setVacccineIndex] = React.useState();
   const [selectedEffects, setEffectIndexes] = React.useState();
+  //boolean
   const [nameEmpty, setEmptyName] = React.useState(true);
   const [surnameEmpty, setEmptySurname] = React.useState(true);
   const [cityEmpty, setEmptyCity] = React.useState(true);
