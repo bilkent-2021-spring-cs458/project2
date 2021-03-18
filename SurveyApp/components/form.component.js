@@ -99,7 +99,6 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const validateAll = () => {
-    console.log(!isNameValid(), !isSurnameValid(), !isCityValid())
     if (!isNameValid() || !isSurnameValid() || !isCityValid()) {
       return false;
     }
@@ -108,17 +107,16 @@ export const FormScreen = ({ navigation }) => {
   };
   const handleSubmit = () => {
     if (validateAll()) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      const data = {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      navigation.navigate("Submission", {
         name: name,
         surname: surname,
         birthdate: birthday.toLocaleDateString(undefined, options),
         gender: displayGender,
         city: city,
         sideEffects: displaySideEffect,
-        displayVaccine: displayVaccine
-      }
-      navigation.navigate("Submission",data);
+        displayVaccine: displayVaccine,
+      });
     } else {
       alert("Fill the fields");
     }
@@ -266,7 +264,6 @@ export const FormScreen = ({ navigation }) => {
       {validateAll() ? (
         <Button
           accessible={true}
-          ppearance="outline"
           status="basic"
           style={styles.btn}
           accessibilityLabel="submissionBtn"
