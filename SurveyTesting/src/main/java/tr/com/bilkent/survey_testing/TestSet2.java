@@ -7,6 +7,10 @@ import org.openqa.selenium.WebElement;
 import io.appium.java_client.MobileDriver;
 import lombok.Getter;
 
+/**
+ * Second test set. Tests whether the survey submit button appears only after
+ * all the fields are filled, and is not visible any other time.
+ */
 public class TestSet2 implements TestSet {
 	private final MobileDriver<WebElement> driver;
 

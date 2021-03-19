@@ -20,10 +20,10 @@ public class Runner {
 	private static final String APPIUM_SERVER = "http://localhost:4723/wd/hub";
 
 	public static void main(String[] args) throws URISyntaxException, MalformedURLException {
-		String path = Paths.get(Runner.class.getResource(APP_RESOURCE).toURI()).toFile().getAbsolutePath();
-
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-//		capabilities.setCapability("app", path);
+
+		String path = Paths.get(Runner.class.getResource(APP_RESOURCE).toURI()).toFile().getAbsolutePath();
+		capabilities.setCapability("app", path);
 
 //		FOR IOS UNCOMMENT THESE
 //		capabilities.setCapability("automationName", "XCUITest");

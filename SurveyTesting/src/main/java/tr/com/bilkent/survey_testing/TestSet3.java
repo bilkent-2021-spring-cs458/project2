@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 import io.appium.java_client.MobileDriver;
 import lombok.Getter;
 
+/**
+ * Second test set. Tests whether the edit response functionality works.
+ */
 public class TestSet3 implements TestSet {
 	private final MobileDriver<WebElement> driver;
 

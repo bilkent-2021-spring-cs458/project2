@@ -11,6 +11,11 @@ import org.openqa.selenium.WebElement;
 import io.appium.java_client.MobileDriver;
 import lombok.Getter;
 
+/**
+ * First test set. Includes test cases for testing various combinations of
+ * inputs. In particular, tests valid values, and invalid values for each input
+ * field.
+ */
 public class TestSet1 implements TestSet {
 	private final JSONArray data;
 	private final MobileDriver<WebElement> driver;
