@@ -64,18 +64,19 @@ export const FormScreen = ({ navigation }) => {
     />
   );
 
+  const isSpotEmpty = (param) => {
+    if (param === "" || param === undefined) {
+      return false;
+    }
+    return true;
+  };
+
   const isNameValid = () => {
     if (name === "") {
       return false;
     }
     const condition = new RegExp("^[a-zA-Z]+$", "g");
     return condition.test(name);
-  };
-  const isSpotEmpty = (param) => {
-    if (param === "" || param === undefined) {
-      return false;
-    }
-    return true;
   };
   const handleNameValidation = () => {
     setEmptyName(isNameValid());
@@ -105,7 +106,14 @@ export const FormScreen = ({ navigation }) => {
   };
 
   const validateAll = () => {
-    if (!isNameValid() || !isSurnameValid() || !isCityValid() || !isSpotEmpty(displayGender) ||!isSpotEmpty(birthday)||!isSpotEmpty(displaySideEffect) || !isSpotEmpty(displayVaccine) ) {
+    if (
+      !isNameValid() ||
+      !isSurnameValid() ||
+      !isCityValid() ||
+      !isSpotEmpty(displayGender) ||
+      !isSpotEmpty(birthday) ||
+      !isSpotEmpty(displayVaccine)
+    ) {
       return false;
     }
 
@@ -258,7 +266,7 @@ export const FormScreen = ({ navigation }) => {
       >
         <Select
           label="Side Effects"
-          placeholder="Please select"
+          placeholder="None"
           multiSelect
           value={displaySideEffect}
           selectedIndex={selectedEffects}

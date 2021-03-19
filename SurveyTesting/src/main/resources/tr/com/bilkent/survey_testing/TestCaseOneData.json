@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Name",
+    "surname": "Surname",
+    "birthdate": "15/07/2001",
+    "city": "Ankara",
+    "gender": "Male",
+    "vaccine": "AZD1222",
+    "side_effects": [],
+    "expected_result": "success"
+  },
+  {
+    "name": "Name",
+    "surname": "Surname",
+    "birthdate": "19/07/2009",
+    "city": "Ankara",
+    "gender": "Male",
+    "vaccine": "AZD1222",
+    "side_effects": ["Pain", "Swelling", "Redness"],
+    "expected_result": "success"
+  },
+  {
+    "name": "Test",
+    "surname": "Test",
+    "birthdate": "15/03/2001",
+    "city": "Denizli",
+    "gender": "Other",
+    "vaccine": "BNT162b2/COMIRNATY Tozinameran (INN)",
+    "side_effects": ["Tiredness"],
+    "expected_result": "success"
+  },
+  {
+    "name": "Invalid Name",
+    "surname": "Surname",
+    "birthdate": "15/07/2001",
+    "city": "Ankara",
+    "gender": "Male",
+    "vaccine": "AZD1222",
+    "side_effects": [],
+    "expected_result": "fail"
+  },
+  {
+    "name": "Name",
+    "surname": "Invalid Surname",
+    "birthdate": "15/07/2001",
+    "city": "Ankara",
+    "gender": "Male",
+    "vaccine": "AZD1222",
+    "side_effects": [],
+    "expected_result": "fail"
+  },
+  {
+    "name": "Name",
+    "surname": "Surname",
+    "birthdate": "15/07/2001",
+    "city": "Invalid",
+    "gender": "Male",
+    "vaccine": "AZD1222",
+    "side_effects": [],
+    "expected_result": "fail"
+  },
+  {
+    "name": "Name",
+    "surname": "Surname",
+    "birthdate": "15/07/2001",
+    "city": "Adana",
+    "gender": "Invalid",
+    "vaccine": "AZD1222",
+    "side_effects": [],
+    "expected_result": "fail"
+  },
+  {
+    "name": "Name",
+    "surname": "Surname",
+    "birthdate": "15/07/2001",
+    "city": "Adana",
+    "gender": "Female",
+    "vaccine": "Invalid",
+    "side_effects": [],
+    "expected_result": "fail"
+  }
+]
