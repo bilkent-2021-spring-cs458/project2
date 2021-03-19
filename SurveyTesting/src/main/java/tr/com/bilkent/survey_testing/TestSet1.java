@@ -33,7 +33,6 @@ public class TestSet1 implements TestSet {
 	public TestSetResult run() {
 		data.forEach(obj -> {
 			boolean caseResult = run((JSONObject) obj);
-			System.out.println(caseResult);
 			if (caseResult) {
 				result.incrementPassedCases();
 			}

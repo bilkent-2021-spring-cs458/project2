@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.android.AndroidDriver;
 
 /**
@@ -24,7 +25,13 @@ public class Runner {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 //		capabilities.setCapability("app", path);
 
-		AndroidDriver<WebElement> driver = new AndroidDriver<>(new URL(APPIUM_SERVER), capabilities);
+//		FOR IOS UNCOMMENT THESE
+//		capabilities.setCapability("automationName", "XCUITest");
+//		capabilities.setCapability("deviceName", "iPhone simulator");
+//		capabilities.setCapability("udid", "enter here");
+//		capabilities.setCapability("platformVersion", "14.4");
+
+		MobileDriver<WebElement> driver = new AndroidDriver<>(new URL(APPIUM_SERVER), capabilities);
 
 		// Initial loading wait
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -33,7 +40,7 @@ public class Runner {
 
 		// Tests
 		TestSetResult overall = new TestSetResult(0, 0);
-		TestSet[] sets = { new TestSet3(driver) };
+		TestSet[] sets = { new TestSet1(driver), new TestSet2(driver), new TestSet3(driver) };
 
 		for (int setNum = 0; setNum < sets.length; setNum++) {
 			System.out.println("Test Set " + (setNum + 1) + ": " + sets[setNum].run());

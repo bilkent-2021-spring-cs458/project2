@@ -28,10 +28,12 @@ public class AppModel {
 	private static final By VACCINE_TYPE = MobileBy.AccessibilityId("vaccineSelection");
 	private static final By SIDE_EFFECTS = MobileBy.AccessibilityId("sideEffectSelection");
 
-	private static final By RANDOM_DATE = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/"
-			+ "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/"
-			+ "android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/"
+	private static final By RANDOM_DATE_ANDROID = By.xpath("/hierarchy/android.widget.FrameLayout/"
+			+ "android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/"
+			+ "android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/"
+			+ "android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/"
 			+ "android.view.ViewGroup/android.view.ViewGroup[5]/android.view.ViewGroup[1]");
+	private static final By RANDOM_DATE_IOS = By.xpath("(//XCUIElementTypeOther[@name=\"28\"])[1]");
 
 	private static final int SLEEP_AMOUNT = 250;
 
@@ -56,19 +58,26 @@ public class AppModel {
 	}
 
 	public void enterName(String name) {
-		driver.findElement(NAME).sendKeys(name);
+		if (name == null) {
+			getNameField().clear();
+		} else
+			getNameField().sendKeys(name);
 		sleep();
 	}
 
 	public void enterSurname(String surname) {
-		driver.findElement(SURNAME).sendKeys(surname);
+		if (surname == null) {
+			getSurnameField().clear();
+		} else {
+			getSurnameField().sendKeys(surname);
+		}
 		sleep();
 	}
 
 	public void enterBirthDate(String bdate) {
 		// Due to Appium limitations, cannot test actual bdate value
 		driver.findElement(BIRTH_DATE).click();
-		driver.findElement(RANDOM_DATE).click();
+		driver.findElement("ios".equals(driver.getPlatformName()) ? RANDOM_DATE_IOS : RANDOM_DATE_ANDROID).click();
 		sleep();
 	}
 
@@ -79,7 +88,11 @@ public class AppModel {
 	}
 
 	public void enterCity(String city) {
-		driver.findElement(CITY).sendKeys(city);
+		if (city == null) {
+			getCityField().clear();
+		} else {
+			getCityField().sendKeys(city);
+		}
 		sleep();
 	}
 
@@ -115,15 +128,15 @@ public class AppModel {
 	}
 
 	public String getName() {
-		return driver.findElement(NAME).getText();
+		return getNameField().getText();
 	}
 
 	public String getSurname() {
-		return driver.findElement(SURNAME).getText();
+		return getSurnameField().getText();
 	}
 
 	public String getCity() {
-		return driver.findElement(CITY).getText();
+		return getCityField().getText();
 	}
 
 	public String getBirthDate() {
@@ -185,7 +198,13 @@ public class AppModel {
 
 	private void sleep() {
 		try {
-			Thread.sleep(SLEEP_AMOUNT);
+			if ("ios".equals(driver.getPlatformName())) {
+				Thread.sleep(SLEEP_AMOUNT / 2);
+				loseFocus();
+				Thread.sleep(SLEEP_AMOUNT / 2);
+			} else {
+				Thread.sleep(SLEEP_AMOUNT);
+			}
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
@@ -198,5 +217,20 @@ public class AppModel {
 
 	private boolean doesExist(By selector) {
 		return !driver.findElements(selector).isEmpty();
+	}
+
+	private WebElement getNameField() {
+		List<WebElement> list = driver.findElements(NAME);
+		return list.get(list.size() - 1);
+	}
+
+	private WebElement getSurnameField() {
+		List<WebElement> list = driver.findElements(SURNAME);
+		return list.get(list.size() - 1);
+	}
+
+	private WebElement getCityField() {
+		List<WebElement> list = driver.findElements(CITY);
+		return list.get(list.size() - 1);
 	}
 }
